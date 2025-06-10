@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Calculator() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
+
   const buttons = [7, 8, 9, "+", 4, 5, 6, "-", 1, 2, 3, "*", "C", 0, "=", "/"];
 
   const handleClick = (value) => {
@@ -11,11 +12,13 @@ export default function Calculator() {
       setResult("");
     } else if (value === "=") {
       try {
-        setResult(eval(input)); 
+        const evalResult = eval(input);
+        setResult(isNaN(evalResult) ? "NaN" : evalResult);
       } catch {
         setResult("Error");
       }
     } else {
+      if (result) setResult(""); // clear previous result if user starts new input
       setInput(input + value);
     }
   };
