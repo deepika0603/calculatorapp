@@ -11,7 +11,7 @@ export default function Calculator() {
       setResult("");
     } else if (value === "=") {
       try {
-        setResult(eval(input)); // simple but not recommended for complex apps
+        setResult(eval(input)); 
       } catch {
         setResult("Error");
       }
