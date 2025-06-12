@@ -1,65 +1,67 @@
 import { useState } from "react";
 
 export default function Calculator() {
+  const buttons = [7, 8, 9, "+", 4, 5, 6, "-", 1, 2, 3, "*", "C", 0, "=", "/"];
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
 
-  const buttons = [7, 8, 9, "+", 4, 5, 6, "-", 1, 2, 3, "*", "C", 0, "=", "/"];
-
-  const handleClick = (value) => {
-    if (value === "C") {
-      setInput("");
-      setResult("");
-    } else if (value === "=") {
-      try {
-        const evalResult = eval(input);
-        setResult(isNaN(evalResult) ? "NaN" : evalResult);
-      } catch {
-        setResult("Error");
+  const handleClick = (e) => {
+    if (e.target.tagName === "BUTTON") {
+      if (e.target.value === "C") {
+        setResult("");
+        setInput("");
+      } else if (e.target.value === "=") {
+        if (input === "") {
+          setResult("Error");
+        } else {
+          setResult(eval(input));
+        }
+      } else {
+        setInput((prevVal) => prevVal + e.target.value);
       }
-    } else {
-      if (result) setResult(""); // clear previous result if user starts new input
-      setInput(input + value);
     }
   };
 
   return (
-    <div
-      style={{ textAlign: "center", marginTop: "50px", paddingLeft: "300px" }}
-    >
-      <h1>React Calculator</h1>
-      <input
-        value={input}
-        readOnly
-        style={{ fontSize: "24px", width: "200px", textAlign: "right" }}
-      />
-      <div style={{ fontSize: "20px", color: "gray", margin: "10px" }}>
-        {result}
-      </div>
-
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 60px)",
-          gap: "10px",
-          justifyContent: "center",
-          paddingLeft: "110px",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "500px",
+          gap: "15px",
         }}
       >
-        {buttons.map((btn, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleClick(btn)}
-            style={{
-              height: "60px",
-              fontSize: "20px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            {btn}
-          </button>
-        ))}
+        <h1>React Calculator</h1>
+        <input type="text" defaultValue={input} readOnly />
+        <div style={{ color: "grey", fontSize: "25px" }}>{`${result}`}</div>
+        <div
+          style={{
+            display: "flex",
+            gap: "25px",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            width: "350px"
+          }}
+          onClick={handleClick}
+        >
+          {buttons.map((item, index) => (
+            <button
+              style={{
+                padding: "10px",
+                height: "60px",
+                width: "60px",
+                border: "2px solid black",
+                borderRadius: "10px",
+              }}
+              key={`${item}_${index}`}
+              value={item}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

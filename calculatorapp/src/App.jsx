@@ -1,6 +1,7 @@
 import Calculator from "./components/calculator";
 
 function App() {
+  
 
   return (
     <div>
@@ -8,5 +9,5 @@ function App() {
     </div>
   )
 }
-//update it
+
 export default App;

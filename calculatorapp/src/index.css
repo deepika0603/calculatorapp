@@ -6,11 +6,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 body {
   margin: 0;
- width: 100px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
-
